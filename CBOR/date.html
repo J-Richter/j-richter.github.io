@@ -25,15 +25,16 @@ Object Representation (CBOR) (ref. 1).
 <ul>
 <li>Tag:   tbd8
 <li>Data item: text string
-<li>Semantics: IANA Time Zone designator (00:00)
+<li>Semantics: IANA Time Zone designator
 </ul>
 <h2>
 Introduction
 </h2>
 <p>
-  CBOR tag 1 provides only a coding for time points.  This has same drawbacks when only the date or only the
-  time part should be stored.  This document proposes two new tags so that the date and time can be encoded
-  individually.
+  Many areas of daily life require date and time information. For example, birthdays or opening hours.
+  CBOR tag 1 provides only a coding for time points.  A major disadvantage is that a specific date or time can
+  only be interpreted in conjunction with a time zone or a UTC offset.  This document
+  proposes two new tags so that the date and time can be encoded individually.
 </p><p>
   A date consists of three components: year, month and day.
 </p><p>
@@ -41,7 +42,7 @@ Introduction
 </p><p>
   In addition, a tag is specified for the coding of a IANA time zone designator.
 </p><p>
-  Some programming language have built-in support for date, time or time zone objects.  C++ has a proposal to
+  Some programming languages have built-in support for date, time or time zone objects.  C++ has a proposal to
   add support to its standard library. (As of 2019)
 </p><p>
 <h2>
