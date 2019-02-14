@@ -11,19 +11,19 @@ Object Representation (CBOR) (ref. 1).
 </p>
 <h3>Date</h3>
 <ul>
-<li>Tag:   tbd6
+<li>Tag:   100  (ASCII 'd')
 <li>Data item: positive or negative integer or text string
 <li>Semantics: Date / Days since 1970-01-01
 </ul>
 <h3>Time</h3>
 <ul>
-<li>Tag:   tbd7
+<li>Tag:   116  (ASCII 't')
 <li>Data item: positive integer or floating point number or text string
 <li>Semantics: Time of day / Seconds since midnight (00:00)
 </ul>
 <h3>Time Zone</h3>
 <ul>
-<li>Tag:   tbd8
+<li>Tag:   122  (ASCII 'z')
 <li>Data item: text string
 <li>Semantics: IANA Time Zone designator
 </ul>
@@ -49,19 +49,19 @@ Introduction
 Detailed Semantics
 </h2>
 <p>
-  A date in CBOR has tag tbd6 and is encoded as a positive or negative integer or a text string.
+  A date in CBOR has tag 100 and is encoded as a positive or negative integer or a text string.
   The integer counts the days since 1970-01-01.  The text string encodes the date in ISO 8601 format
   "YYYY-MM-DD".
 </p><p>
-  A time of day in CBOR has tag tbd7 and is encoded as a positive integer or a floating point number or a text
+  A time of day in CBOR has tag 116 and is encoded as a positive integer or a floating point number or a text
   string.  The integer and floating point number encode the (fractional) seconds since midnight.  The text
   string encodes the time in ISO 8601 format "hh:mm", "hh:mm:ss" or "hh:mm:ss.sss".  The last one contains
   fractional seconds "sss".  Fractional seconds have at least 1 decimal place and are not limited to any
   length.
 </p><p>
-  A time zone has the tag tbd8 and is encoded as a text string.
+  A time zone has the tag 122 and is encoded as a text string.
 </p><p>
-  A CBOR decoder can treat data items with tag tbd6, tbd7 or tbd8 that don't meet the criteria above as an
+  A CBOR decoder can treat data items with tag 100, 116 or 122 that don't meet the criteria above as an
   error, but this specification doesn't define how a CBOR implementation ought to behave in this case.
   Section 3.4 of RFC 7049 (ref. 1) details this kind of error-handling behavior.
 </p><p>
@@ -71,25 +71,25 @@ Detailed Semantics
 The following example shows how the date 2018-12-31 is encoded.
 </p>
 <pre>
-  c6         -- tag(6)
-     19 45e8 -- unsigned(17896)
+  D8 64         # tag(100)
+     19 45E8    # unsigned(17896)
 </pre>
 
 <p>
 The following example shows how the time 12:00:05 is encoded.
 </p>
 <pre>
-  c7         -- tag(7)
-     19 a8c5 -- unsigned(43205)
+  D8 74         # tag(116)
+     19 A8C5    # unsigned(43205)
 </pre>
 
 <p>
 The following example shows how the time zone "America/New_York" is encoded.
 </p>
 <pre>
-  c8                                     -- tag(8)
-     70                                  -- text(16)
-       416d65726963612f4e65775f596f726b  -- "America/New_York"
+  D8 7A                                  # tag(122)
+     70                                  # text(16)
+	416D65726963612F4E65775F596F726B # "America/New_York"
 </pre>
 
 <p>

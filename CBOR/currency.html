@@ -11,13 +11,13 @@ Object Representation (CBOR) (ref. 1).
 </p>
 <h3>Currency</h3>
 <ul>
-<li>Tag:   tbd9
+<li>Tag:   164
 <li>Data item: text string or positive integer
 <li>Semantics: ISO 4217 currency
 </ul>
 <h3>Amount of Money</h3>
 <ul>
-<li>Tag:   tbd10
+<li>Tag:   165
 <li>Data item: array
 <li>Semantics: Combines a number with a currency to represent a money amount
 </ul>
@@ -37,13 +37,19 @@ Introduction
 Detailed Semantics
 </h2>
 <p>
-  A currency in CBOR has tag tbd9 and is encoded as a text string or a positive integer.
+  A currency in CBOR has tag 164 and is encoded as a text string or a positive integer.
   The text string is the ISO 4217 currency code.  The integer is the ISO 4217 currency number.
-</p><p>
-  A money amount in CBOR has tag tbd10 and is encoded as an array of length 2.  The first element of the
-  array is the numeric value of the money amount.  The second element is the currency encoded as a text
-  string or a positive integer with the same semantics as above.
-
+</p>
+<p>
+  Implementations must support currencies encoded as a text string.  Support for encoding a currency as number
+  is optional.
+</p>
+<p>
+  A money amount in CBOR has tag 165 and is encoded as an array of length 2.  The first element is the
+  currency encoded as a text string or a positive integer with the same semantics as above.  The second
+  element of the array is the numeric value of the money amount.
+</p>
+<p>
   The numeric value can be a positive integer (major type 0), a negative integer (major type 1),
   a positive bignum (tag 2), a negative bignum (tag 3), a decimal fraction (tag 4), a bigfloat (tag 5) or
   a rational number (tag 30).
@@ -51,7 +57,7 @@ Detailed Semantics
   bignums, bigfloats and rational numbers is optional.
 
 </p><p>
-  A CBOR decoder can treat data items with tag tbd9 or tbd10 that don't meet the criteria above as an
+  A CBOR decoder can treat data items with tag 164 or 165 that don't meet the criteria above as an
   error, but this specification doesn't define how a CBOR implementation ought to behave in this case.
   Section 3.4 of RFC 7049 (ref. 1) details this kind of error-handling behavior.
 </p><p>
@@ -61,20 +67,20 @@ Detailed Semantics
 The following example shows how the currency "USD" is encoded.
 </p>
 <pre>
-  c9           -- tag(9)
-     63        -- text(3)
-	555344 -- "USD"
+  D8 A4           # tag(164)
+     63           # text(3)
+	555344    # "USD"
 </pre>
 
 <p>
 The following example shows how the money amount "85 EUR"  is encoded.
 </p>
 <pre>
-  ca              -- tag(10)
-     82           -- array(2)
-	18 55     -- unsigned(85)
-	63        -- text(3)
-	   455552 -- "EUR"
+  D8 A5           # tag(165)
+     82           # array(2)
+	63        # text(3)
+	   455552 # "EUR"
+	18 55     # unsigned(85)
 </pre>
 
 <p>
